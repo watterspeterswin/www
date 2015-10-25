@@ -1,43 +1,57 @@
+<?php require_once("../includes/session.php"); ?>
 <?php require_once("../includes/functions.php"); ?>
+<?php confirm_loggedin(); ?>
+<?php $layout_context="admin"; ?>
 <?php $dblink=GetConnection(); ?>
 <?php include("../includes/layout/header.php"); ?>
+<?php find_selected_page(); ?>
 
 <div id="main">
 	<div id="navigation">
-	<?php $subject_set = find_all_subjects(); ?>
-	<ul  class="subjects">
-	<?php 
-		while ($subject=$subject_set->fetch_assoc()) {
-	?>
-		<li>
-		<a href=""><?php echo $subject["menu_name"]; ?></a>
-		<?php $page_set = find_pages_for_subject($subject["id"]); ?>
-		<ul class="pages">
-		<?php 
-		while ($pages=$page_set->fetch_assoc()) {
-		?>
-		<li><a href=""><?php echo $pages["menu_name"]; ?></a></li>
-		<?php 
-		}
-		?>
-		<?php $page_set->free_result(); ?>	
-		</ul>
-	</li>
-	<?php
-	}
-	?>
-	</ul>
-	
+	<br />
+	<a href="admin.php">&laquo; Main menu</a>
+	<?php echo navigation($current_subject, $current_page); ?>
+	<br />
+	<a href="new_subject.php">+ Add subject</a><br/>
+
 	</div>
 	<div id="page">
-		<h2>Manage Content</h2>
-		<p> Welcome to the Manage Content area.</p>
+	    <?php echo message(); ?>
 		<ul>
-			<li><a href="manage_content.php">Manage Content</a></li>
-			<li><a href="manage_admins.php">Manage Admins</a></li>
-			<li><a href="Logout.php">Logout</a></li>
+			<?php 
+			if ($current_subject) { 
+			    echo "<h2>Manage Subject</h2>";
+				echo "Menu Name: ";
+				echo htmlentities($current_subject["menu_name"]);
+				echo "<br/>  Position: {$current_subject["position"]}";
+				echo "<br/>   Visible: ";
+				echo $current_subject["visible"]==0 ? "no" : "yes";
+				echo "<br/><br/><a href=\"edit_subject.php?subject={$current_subject["id"]}\">Edit Subject</a>";
+				echo "<br/><br/><a href=\"new_page.php?subject={$current_subject["id"]}\">Add Page</a>";
+			}
+			elseif ($current_page) {
+				echo "<h2>Manage Page</h2>";
+				echo "Menu Name: ";
+				echo htmlentities($current_page["menu_name"]);
+				echo "<br/>  Position: {$current_page["position"]}";
+				echo "<br/>   Visible: ";
+				echo $current_page["visible"]==0 ? "no" : "yes";
+				echo "<br/>   Content: ";
+				echo "<div class=\"view-content\">";
+				echo htmlentities($current_page["content"]);
+				echo "</div>";
+				
+				echo "<br/><br/><a href=\"new_page.php?subject={$current_page["subject_id"]}\">Add Page</a>";
+				echo "<br/><br/><a href=\"edit_page.php?page={$current_page["id"]}\">Edit Page</a>";
+				echo "<br/><br/><a href=\"delete_page.php?page={$current_page["id"]}\">Delete Page</a>";
+
+			}
+			else {
+				echo "Please select a subject or page";
+			}
+			?> 
 		</ul>
 	</div>
 </div>
-<?php $subject_set->free_result(); ?>
+
 <?php include("../includes/layout/footer.php"); ?>

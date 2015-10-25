@@ -3,14 +3,14 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" x:Class="WpfApplication1.MainWindow"
+    mc:Ignorable="d" x:Class="SimpleEditNS.MainWindow"
         Title="MainWindow"
     Closing="Windows_Closing">
 
     <DockPanel >
         <DockPanel >
-            <Menu DockPanel.Dock="Top" VerticalAlignment="Top">
-                <MenuItem x:Name="menu_exit" Header="_File" >
+            <Menu Name="menuBar" DockPanel.Dock="Top" VerticalAlignment="Top">
+                <MenuItem x:Name="fileMenu" Header="_File" >
                     <MenuItem x:Name="newFile" Header="_New" Click="newFile_Click" />
                     <MenuItem x:Name="openFile" Header="_Open" Click="openFile_Click" />
                     <MenuItem x:Name="saveFile" Header="_Save" Click="saveFile_Click" />

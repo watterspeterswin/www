@@ -6,25 +6,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace WpfApplication1
+namespace SimpleEditNS
 {
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
     public partial class App : Application
     {
-        MainWindow wnd;
+        MainWindow _wnd;
         private void Application_Startup(object sender, StartupEventArgs e)
         {
             // Create the startup window
-            wnd = new MainWindow();
+            _wnd = new MainWindow();
             // Do stuff here, e.g. to the window
-            wnd.Title = "Something else";
+            _wnd.Title = "";
             // Show the window
-            wnd.Show();
+            _wnd.Show();
         }
-
-
-
     }
 }

@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 
-namespace WpfApplication1
+namespace SimpleEditNS
 {
-    class Document : IDisposable
+    class Document 
     {
+        string _path;
+        string _text;
+        bool _dirty;
+
         public Document()
         {
             _dirty = false;
@@ -28,41 +30,30 @@ namespace WpfApplication1
 
             if (RetVal)
             {
-                _dirty = false;
                 System.IO.File.WriteAllText(Path, Text);
+                _dirty = false;
             }
             return RetVal;
         }
 
-        public void Dispose()
-        {
-
-        }
-        string _path;
 
         public string Path
         {
             get { return _path; }
             set
             {
-                _dirty = true;
                 _path = value;
             }
         }
-
-        string _text;
 
         public string Text
         {
             get { return _text; }
             set
             {
-                _dirty = true;
                 _text = value; 
             }
         }
-
-        bool _dirty;
 
         public bool Dirty
         {
